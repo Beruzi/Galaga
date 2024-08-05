@@ -1,39 +1,19 @@
 #include <SDL2/SDL.h>
-#include <iostream>
+
+#include "GameEngine.h"
+#include "player.h"
 
 int main() {
-
-    if(SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+    GameEngine engine;
+    if(!engine.init((char*)"Galaga", 480, 640)) {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow(
-        "SDL2 Window",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        800,
-        600,
-        SDL_WINDOW_SHOWN
-    );
-
-    if(window == nullptr) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    if(renderer == nullptr) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 1;
-    }
+    // Init Player Object
+    Player player;
 
     bool running = true;
     SDL_Event event;
-
     while(running) {
         while(SDL_PollEvent(&event)) {
             if(event.type == SDL_QUIT) {
@@ -41,14 +21,13 @@ int main() {
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
-    }
+        SDL_SetRenderDrawColor(engine.getRenderer(), 0, 0, 0, 255);
+        SDL_RenderClear(engine.getRenderer());
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+        // Render the Player's sprite
+        player.render(engine.getRenderer(), engine.getSpriteSheet());
+        SDL_RenderPresent(engine.getRenderer());
+    }
 
     return 0;
 }
