@@ -42,7 +42,7 @@ bool GameEngine::init(char* windowTitle, int width, int height) {
         return false;
     }
 
-    if(!loadSpriteSheet("assets/Sprites/SpriteSheet.bmp")) {
+    if(!loadSpriteSheet((char*)"assets/Sprites/SpriteSheet.bmp")) {
         shutdown();
         return false;
     }

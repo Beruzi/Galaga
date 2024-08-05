@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <iostream>
 
 #include "GameEngine.h"
 #include "player.h"
@@ -11,6 +12,7 @@ int main() {
 
     // Init Player Object
     Player player;
+    int playerSpeed = 1;
 
     bool running = true;
     SDL_Event event;
@@ -18,6 +20,27 @@ int main() {
         while(SDL_PollEvent(&event)) {
             if(event.type == SDL_QUIT) {
                 running = false;
+            }
+            else if(event.type == SDL_KEYDOWN) {
+                switch(event.key.keysym.sym) {
+                    case SDLK_w:
+                        player.move(0, -playerSpeed);
+                        break;
+                    case SDLK_a:
+                        player.move(-playerSpeed, 0);
+                        break;
+                    case SDLK_s:
+                        player.move(0, playerSpeed);
+                        break;
+                    case SDLK_d:
+                        player.move(playerSpeed, 0);
+                        break;
+                    case SDLK_SPACE:
+                        std::cout << "MISSILE!" << std::endl;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

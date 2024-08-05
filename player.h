@@ -13,6 +13,9 @@ public:
     // Class Things
     Player();
 
+    // Movement
+    void move(int dx, int dy);
+
     // Render
     void render(SDL_Renderer* renderer, SDL_Texture* spriteSheet);
 };

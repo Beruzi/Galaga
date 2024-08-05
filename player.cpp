@@ -12,6 +12,11 @@ Player::Player() {
 // ------------------------
 // Player Functionality
 // ------------------------
+void Player::move(int dx, int dy) {
+    winRect.x += dx;
+    winRect.y += dy;
+}
+
 void Player::render(SDL_Renderer* renderer, SDL_Texture* spriteSheet) {
     SDL_RenderCopy(renderer, spriteSheet, &srcRect, &winRect);
 }
