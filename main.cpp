@@ -17,32 +17,30 @@ int main() {
     bool running = true;
     SDL_Event event;
     while(running) {
+        
+        // Event Driven 
         while(SDL_PollEvent(&event)) {
             if(event.type == SDL_QUIT) {
                 running = false;
             }
-            else if(event.type == SDL_KEYDOWN) {
-                switch(event.key.keysym.sym) {
-                    case SDLK_w:
-                        player.move(0, -playerSpeed);
-                        break;
-                    case SDLK_a:
-                        player.move(-playerSpeed, 0);
-                        break;
-                    case SDLK_s:
-                        player.move(0, playerSpeed);
-                        break;
-                    case SDLK_d:
-                        player.move(playerSpeed, 0);
-                        break;
-                    case SDLK_SPACE:
-                        std::cout << "MISSILE!" << std::endl;
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
+
+        // Continous Polling of state -- for smooth player movement
+        int* numKeys;
+        const Uint8* keyboardState = SDL_GetKeyboardState(numKeys);
+        if (keyboardState[SDL_SCANCODE_W]) {
+            player.move(0, -playerSpeed);
+        }
+        if (keyboardState[SDL_SCANCODE_A]) {
+            player.move(-playerSpeed, 0);
+        }
+        if (keyboardState[SDL_SCANCODE_S]) {
+            player.move(0, playerSpeed);
+        }
+        if (keyboardState[SDL_SCANCODE_D]) {
+            player.move(playerSpeed, 0);
+        }
+
 
         SDL_SetRenderDrawColor(engine.getRenderer(), 0, 0, 0, 255);
         SDL_RenderClear(engine.getRenderer());
