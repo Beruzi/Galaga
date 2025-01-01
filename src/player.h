@@ -15,10 +15,35 @@ public:
         setSourceRect(184, 55, 15, 16);
     }
 
+    /**
+     * @brief Handling all types of input for the player... moving and shooting
+     */
+    void handleInput(const SDL_Event& event) {
+        if (event.type == SDL_KEYDOWN){
+            switch (event.key.keysym.sym) {
+                case SDLK_w: 
+                    rect.y -= 5; 
+                    break;
+                case SDLK_a:
+                    rect.x -= 5; 
+                    break;
+                case SDLK_s:
+                    rect.y += 5; 
+                    break;
+                case SDLK_d:
+                    rect.x += 5; 
+                    break;
+                case SDLK_SPACE:
+                    shoot();
+                    break;
+            }
+        }
+    }
 
-
+    /**
+     * @brief player fires a shot
+     */
+    void shoot() {
+        std::cout << "Pew" << std::endl;
+    }
 };
-
-
-// 184, 55
-// 15w x 16h

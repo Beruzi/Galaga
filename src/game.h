@@ -68,7 +68,8 @@ public:
                 if (event.type == SDL_QUIT) {
                     isRunning = false;
                 }
-                std::cout << event.type << std::endl;
+                // Player event
+                player->handleInput(event);
             }
 
             // Render Updates

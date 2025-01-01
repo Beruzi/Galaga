@@ -29,4 +29,4 @@ Things to add:
 - Constants File 
     - Will handle some constants like the sprite sheet path or width + height of the sprites
 
-
+- Change how keyboard event handling works... at the moment I can only handle one button press at a time in a sequential order (duh the event queue).... this means however that it is impossible to move diagonal or fire and move at the same time.
