@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "player.h"
 
 /**
  * @brief The Game object will define all of the overhead needed for executing the game.
@@ -11,20 +12,23 @@ private:
     // Core Priate Members
     SDL_Window *window = nullptr;
     SDL_Renderer *renderer = nullptr;
+    bool isRunning = false;
+    Player* player = nullptr;
 
 public:
     // Default Constructor
     Game() {
         // Initialize SDL
-        if(SDL_Init(SDL_INIT_VIDEO) < 0){ 
+        if(SDL_Init(SDL_INIT_VIDEO) < 0) { 
             std::cout << "SDL could not be intialized" << SDL_GetError() <<  std::endl;
 
-        } else{
+        } 
+        else {
             std::cout << "SDL is ready to go" << std::endl;
         }
 
 
-        // Define the Window
+        // Initialize the Winow and Renderer
         window = SDL_CreateWindow(
             "Galaga",
             SDL_WINDOWPOS_CENTERED,
@@ -32,22 +36,23 @@ public:
             480,
             640,
             SDL_WINDOW_SHOWN);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 
-        // Define the Rendered
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        // Load the Sprite sheet
+        Sprite::LoadSpriteSheet(renderer, "../assets/Sprites/SpriteSheet.bmp");
+
+        // Create the player
+        player = new Player(240 - 15, 600 - 16, 15, 16, renderer);
     }
     // Destructor
-    ~Game()
-    {
-        // Clean up SDL Resources
+    ~Game(){
+        // Clean up my resources
+        delete player;
+        // Clean up SDL resources
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();
     }
-
-private:
-    bool isRunning = false;
-
 public:
     /**
      * @brief Main function responsible for running the game.
@@ -57,17 +62,23 @@ public:
         SDL_Event event;
         isRunning = true;
 
-        // Start Game Loop
         while (isRunning) {
-
-            // Event Loop
             while (SDL_PollEvent(&event)) {
-                // Check if Quit Event Occurs
+                // Quit Event
                 if (event.type == SDL_QUIT) {
                     isRunning = false;
                 }
                 std::cout << event.type << std::endl;
             }
+
+            // Render Updates
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_RenderClear(renderer);
+
+            player->Render();
+
+            SDL_RenderPresent(renderer);
         }
     }
+
 };
