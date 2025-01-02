@@ -4,7 +4,7 @@ This is a remake of the 80's arcade game, Galaga. Built using SDL2, I am pursuin
 
 
 ###### Notes
-I'll be taking some general notes for myself in this space, so just ignore. Towards the end of the project I'll post my journal of notes I'll be taking alongside of development. 
+I'll be taking some general notes for myself in this space, so just ignore. Towards the end of the project I'll post the actual set of notes I've been taking alongside development. This will cover some things I'ver learned about using SDL2, general game development, CPP stuff, and more.  
 
 
 
@@ -27,6 +27,10 @@ Spritesheet Cordinates (x, y, w, h)
 ----------------------------------------------------------------------------------------
 Things to add:
 - Constants File 
-    - Will handle some constants like the sprite sheet path or width + height of the sprites
+    - Constants for some of the sprites' location/dimensions
+    - Constant for Sprite sheet file path
+    - Constant heigh and width for window
+    - Constant height and width for a border around the window -- PADDING 
+        - Currently I am using '5' as the padding 
 
 - Change how keyboard event handling works... at the moment I can only handle one button press at a time in a sequential order (duh the event queue).... this means however that it is impossible to move diagonal or fire and move at the same time.

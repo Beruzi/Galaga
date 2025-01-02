@@ -68,9 +68,11 @@ public:
                 if (event.type == SDL_QUIT) {
                     isRunning = false;
                 }
-                // Player event
-                player->handleInput(event);
+                player->handleImmediateInput(event);
             }
+            
+            // Player event
+            player->handleContinousInput(event);
 
             // Render Updates
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
