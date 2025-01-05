@@ -1,1 +1,7 @@
     
+
+# Ignore Build
+/build/
+
+# VScode configurations
+/.vscode/

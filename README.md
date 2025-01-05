@@ -34,3 +34,12 @@ Things to add:
         - Currently I am using '5' as the padding 
 
 - Change how keyboard event handling works... at the moment I can only handle one button press at a time in a sequential order (duh the event queue).... this means however that it is impossible to move diagonal or fire and move at the same time.
+
+
+- Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed
+
+- Refactor the file structure 
+    - Create seperate source and header files... compiling time is starting to piss me off
+    - Create the proper build dir
+    - Dabble in Cmake stuff
+    - update the .gitignore file as needed

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+
 #include "sprite.h"
 
 /**
@@ -8,57 +9,32 @@
 class Player : public Sprite {
 public:
     // Constructor
-    Player(int x, int y, int w, int h, SDL_Renderer* renderer) 
+    Player(float x, float y, float w, float h, SDL_Renderer* renderer) 
         : Sprite(x, y, w, h, renderer) {
         
         // Set the Source Rectangle to the default/upright player sprite
         setSourceRect(184, 55, 15, 16);
     }
 public:
-    /**
-     * @brief Handling input IMMEDIATELY -- is called within the event loop 
-     */
-    void handleImmediateInput(const SDL_Event& event) {
-        if (event.type == SDL_KEYDOWN && event.key.repeat == 0) { 
-            switch (event.key.keysym.sym) {
-                case SDLK_w: 
-                    rect.y -= 5; 
-                    break;
-                case SDLK_a: 
-                    rect.x -= 5; 
-                    break;
-                case SDLK_s: 
-                    rect.y += 5; 
-                    break;
-                case SDLK_d: 
-                    rect.x += 5; 
-                    break;
-                case SDLK_SPACE:
-                    shoot();
-                    break;
-            }
-        }
-
-        // Check Bounds
-        enforceBounds();
-    }
+    
     
     /**
-     * Handling any CONTINOUS input -- called outside the event loop
+     * @brief Handles the movement inputs (WASD)... this uses the keyboard state rather than the event'
+     * to bypass the 'repeated key delay' that the OS imposes
      */
-    void handleContinousInput(const SDL_Event& event) {
+    void processMovement(float dt) {
         const Uint8* keyState = SDL_GetKeyboardState(NULL);
         if (keyState[SDL_SCANCODE_W]) {
-            rect.y -= 5;
+            rect.y -= (200 * dt);
         }
         if (keyState[SDL_SCANCODE_A]) {
-            rect.x -= 5;
+            rect.x -= (200 * dt);
         }
         if (keyState[SDL_SCANCODE_S]) {
-            rect.y += 5;
+            rect.y += (200 * dt);
         }
         if (keyState[SDL_SCANCODE_D]) {
-            rect.x += 5;
+            rect.x += (200* dt);
         }
 
         // Check Bounds

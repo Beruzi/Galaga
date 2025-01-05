@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
+
+
 /**
  * @brief Abstract Class to be inherited by Player and Enemies
  * @details Contains members rect and srcRect that act as the bounds (location and dimensions) for sprites
@@ -12,28 +14,34 @@ protected:
     // made static so the children can all share the single resource
     static SDL_Texture* spriteSheetTexture;
 
-    SDL_Rect rect;
+    SDL_FRect rect;
     SDL_Rect srcRect;
     SDL_Renderer *renderer;
 
 public:
     /**
+     * Default Constructor
      * @brief Constructor for Abstract Sprite Class
-     * @param x the x position for the rectangle containing the texture
-     * @param y the y position for the rectanlge containing the texture
-     * @param w the width of the rectangle for sprite
-     * @param h the height of the rectangle for sprite
+     * @param x the x position for the sprite to appear on the window
+     * @param y the y position for the sprite to appear on the window
+     * @param w the width of the sprite
+     * @param h the height of the sprite
      * @param renderer the renderer to be used
      *
      */
-    Sprite(int x, int y, int w, int h, SDL_Renderer *renderer)
+    Sprite(float x, float y, float w, float h, SDL_Renderer *renderer)
         : renderer(renderer) {
         rect = {x, y, w, h};
-        srcRect = {0, 0, w, h};
+        srcRect = {0, 0, static_cast<int>(w), static_cast<int>(h)};
     }
 
     // Destructor
-    virtual ~Sprite() {}
+    virtual ~Sprite() {
+        if (spriteSheetTexture) {
+            SDL_DestroyTexture(spriteSheetTexture);
+        }
+        spriteSheetTexture = nullptr;
+    }
 
 
 public:
@@ -71,10 +79,23 @@ public:
     }
 
     /**
-     * @brief Render the sprite to screen
+     * @brief Render the sprite to screen...
      */
     void Render() {
-        SDL_RenderCopy(renderer, spriteSheetTexture, &srcRect, &rect);
+        SDL_Rect intRect = toSDL_Rect();
+        SDL_RenderCopy(renderer, spriteSheetTexture, &srcRect, &intRect);
+    }
+
+    /**
+     * @brief Converts an SDL_FRect to an SDL_Rect (SDL2 doesn't have any function for this)
+     */
+    SDL_Rect toSDL_Rect() const{
+        return SDL_Rect{
+            static_cast<int>(rect.x),
+            static_cast<int>(rect.y),
+            static_cast<int>(rect.w),
+            static_cast<int>(rect.h)
+        };
     }
 };
 

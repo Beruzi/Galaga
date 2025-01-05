@@ -1,6 +1,9 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+
+
 #include "player.h"
+#include "Timer.h"
 
 /**
  * @brief The Game object will define all of the overhead needed for executing the game.
@@ -9,10 +12,13 @@
 class Game
 {
 private:
-    // Core Priate Members
+    // Core Game
     SDL_Window *window = nullptr;
     SDL_Renderer *renderer = nullptr;
     bool isRunning = false;
+    Timer* timer;
+
+    // Game Objects
     Player* player = nullptr;
 
 public:
@@ -26,8 +32,6 @@ public:
         else {
             std::cout << "SDL is ready to go" << std::endl;
         }
-
-
         // Initialize the Winow and Renderer
         window = SDL_CreateWindow(
             "Galaga",
@@ -41,17 +45,22 @@ public:
         // Load the Sprite sheet
         Sprite::LoadSpriteSheet(renderer, "../assets/Sprites/SpriteSheet.bmp");
 
+        // Start Timer
+        timer = new Timer();
+
         // Create the player
         player = new Player(240 - 15, 600 - 16, 15, 16, renderer);
+
     }
     // Destructor
     ~Game(){
         // Clean up my resources
         delete player;
+        delete timer;
+
         // Clean up SDL resources
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
-        SDL_Quit();
     }
 public:
     /**
@@ -68,18 +77,22 @@ public:
                 if (event.type == SDL_QUIT) {
                     isRunning = false;
                 }
-                player->handleImmediateInput(event);
             }
-            
+
+
+
+            // Update Timer
+            timer->Tick();
+            float dt = timer->getDeltaTime();
+
+
             // Player event
-            player->handleContinousInput(event);
+            player->processMovement(dt);
 
             // Render Updates
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             SDL_RenderClear(renderer);
-
             player->Render();
-
             SDL_RenderPresent(renderer);
         }
     }
