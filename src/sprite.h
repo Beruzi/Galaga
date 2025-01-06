@@ -1,103 +1,64 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
 #include <iostream>
 #include <SDL2/SDL.h>
 
-
-
 /**
- * @brief Abstract Class to be inherited by Player and Enemies
+ * @brief Abstract Class to be inherited by any sprite related object (player, enemy, missle, etc.)
  * @details Contains members rect and srcRect that act as the bounds (location and dimensions) for sprites
- * and the bounds for where to find the sprite on the spritesheet
+ * and the bounds for where to find the sprite on the spritesheet.
  */
-class Sprite
-{
+class Sprite {
 protected:
-    // made static so the children can all share the single resource
-    static SDL_Texture* spriteSheetTexture;
+    static SDL_Texture* spriteSheetTexture;  // Shared resource for all sprites
 
-    SDL_FRect rect;
-    SDL_Rect srcRect;
-    SDL_Renderer *renderer;
-
-public:
-    /**
-     * Default Constructor
-     * @brief Constructor for Abstract Sprite Class
-     * @param x the x position for the sprite to appear on the window
-     * @param y the y position for the sprite to appear on the window
-     * @param w the width of the sprite
-     * @param h the height of the sprite
-     * @param renderer the renderer to be used
-     *
-     */
-    Sprite(float x, float y, float w, float h, SDL_Renderer *renderer)
-        : renderer(renderer) {
-        rect = {x, y, w, h};
-        srcRect = {0, 0, static_cast<int>(w), static_cast<int>(h)};
-    }
-
-    // Destructor
-    virtual ~Sprite() {
-        if (spriteSheetTexture) {
-            SDL_DestroyTexture(spriteSheetTexture);
-        }
-        spriteSheetTexture = nullptr;
-    }
-
+    SDL_FRect rect;      
+    SDL_Rect srcRect;   
+    SDL_Renderer* renderer;
 
 public:
     /**
-     * @brief Statically loads the entire sprite sheet for all subsequent children to use and render from
+     * @brief Constructor for the Sprite Class
+     * @param x X-coordinate of the sprite on the screen
+     * @param y Y-coordinate of the sprite on the screen
+     * @param w Width of the sprite
+     * @param h Height of the sprite
+     * @param renderer SDL_Renderer for rendering operations
      */
-    static void LoadSpriteSheet(SDL_Renderer* renderer, const char* spriteSheetPath) {
-        // Loading BMP as a surface
-        SDL_Surface *surface = SDL_LoadBMP(spriteSheetPath);
-        if (!surface) {
-            std::cerr << "Failed to load sprite: " << SDL_GetError() << std::endl;
-            exit(1);
-        }
-
-        // Converting surface to a texture
-        spriteSheetTexture  = SDL_CreateTextureFromSurface(renderer, surface);
-        if (!spriteSheetTexture) {
-            std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
-            exit(1);
-        }
-
-        // Destroy the Surface
-        SDL_FreeSurface(surface);
-    }
+    Sprite(float x, float y, float w, float h, SDL_Renderer* renderer);
 
     /**
-     * @brief Child Classes can define what portion of the sprite sheet they want to copy from
-     * @param x the x position on the sprite sheet
-     * @param y the y position on the sprite sheet
-     * @param w the width of the sprite
-     * @param h the heigh of the sprite
+     * @brief Virtual Destructor for Sprite
      */
-    void setSourceRect(int x, int y, int w, int h) {
-        srcRect = {x, y, w, h};
-    }
+    virtual ~Sprite();
 
     /**
-     * @brief Render the sprite to screen...
+     * @brief Loads the entire sprite sheet for all children to share
+     * @param renderer SDL_Renderer used for creating the texture
+     * @param spriteSheetPath Path to the sprite sheet file
      */
-    void Render() {
-        SDL_Rect intRect = toSDL_Rect();
-        SDL_RenderCopy(renderer, spriteSheetTexture, &srcRect, &intRect);
-    }
+    static void LoadSpriteSheet(SDL_Renderer* renderer, const char* spriteSheetPath);
 
     /**
-     * @brief Converts an SDL_FRect to an SDL_Rect (SDL2 doesn't have any function for this)
+     * @brief Sets the source rectangle on the sprite sheet for this sprite
+     * @param x X-coordinate on the sprite sheet
+     * @param y Y-coordinate on the sprite sheet
+     * @param w Width of the rectangle
+     * @param h Height of the rectangle
      */
-    SDL_Rect toSDL_Rect() const{
-        return SDL_Rect{
-            static_cast<int>(rect.x),
-            static_cast<int>(rect.y),
-            static_cast<int>(rect.w),
-            static_cast<int>(rect.h)
-        };
-    }
+    void setSourceRect(int x, int y, int w, int h);
+
+    /**
+     * @brief Renders the sprite onto the screen
+     */
+    void Render();
+
+    /**
+     * @brief Converts the SDL_FRect to SDL_Rect
+     * @return An SDL_Rect corresponding to the SDL_FRect dimensions
+     */
+    SDL_Rect toSDL_Rect() const;
 };
 
-// Initialize Static Members:
-SDL_Texture *Sprite::spriteSheetTexture = nullptr;
+#endif 

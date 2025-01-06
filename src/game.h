@@ -1,100 +1,45 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <iostream>
 #include <SDL2/SDL.h>
 
-
-#include "player.h"
-#include "Timer.h"
+// Forward Declartions
+class Sprite;
+class Player;
+class Timer;
 
 /**
  * @brief The Game object will define all of the overhead needed for executing the game.
- * This includes the core Game Loop, the event loop + queue, and managing the state of the game
+ * This includes the core Game Loop, the event loop + queue, rendering, and managing the state of the game
  */
-class Game
-{
+class Game {
 private:
-    // Core Game
+    // Core Game Members
     SDL_Window *window = nullptr;
     SDL_Renderer *renderer = nullptr;
     bool isRunning = false;
     Timer* timer;
 
-    // Game Objects
+    // Game Related Members
     Player* player = nullptr;
 
 public:
-    // Default Constructor
-    Game() {
-        // Initialize SDL
-        if(SDL_Init(SDL_INIT_VIDEO) < 0) { 
-            std::cout << "SDL could not be intialized" << SDL_GetError() <<  std::endl;
+    /**
+     * @brief Default Constructor
+     */ 
+    Game();
 
-        } 
-        else {
-            std::cout << "SDL is ready to go" << std::endl;
-        }
-        // Initialize the Winow and Renderer
-        window = SDL_CreateWindow(
-            "Galaga",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            480,
-            640,
-            SDL_WINDOW_SHOWN);
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    /**
+     * Destructor
+     */
+    ~Game();
 
-        // Load the Sprite sheet
-        Sprite::LoadSpriteSheet(renderer, "../assets/Sprites/SpriteSheet.bmp");
-
-        // Start Timer
-        timer = new Timer();
-
-        // Create the player
-        player = new Player(240 - 15, 600 - 16, 15, 16, renderer);
-
-    }
-    // Destructor
-    ~Game(){
-        // Clean up my resources
-        delete player;
-        delete timer;
-
-        // Clean up SDL resources
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-    }
-public:
     /**
      * @brief Main function responsible for running the game.
      * Will start the game loop, event loop, and other primary actions
      */
-    void run() {
-        SDL_Event event;
-        isRunning = true;
-
-        while (isRunning) {
-            while (SDL_PollEvent(&event)) {
-                // Quit Event
-                if (event.type == SDL_QUIT) {
-                    isRunning = false;
-                }
-            }
-
-
-
-            // Update Timer
-            timer->Tick();
-            float dt = timer->getDeltaTime();
-
-
-            // Player event
-            player->processMovement(dt);
-
-            // Render Updates
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderClear(renderer);
-            player->Render();
-            SDL_RenderPresent(renderer);
-        }
-    }
-
+    void run();
 };
+
+#endif 

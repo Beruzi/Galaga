@@ -1,26 +1,33 @@
-#include <iostream>
+#ifndef TIMER_H
+#define TIMER_H
+
 #include <SDL2/SDL.h>
 
 /**
- * @brief Object used handle/navigate tickspeed. 
- * @note deltaTime is the time elapsed in seconds
+ * @brief A utility class for handling frame timing and delta time calculations.
+ * @note Delta time is the time elapsed between frames, measured in seconds.
  */
 class Timer {
 private:
-    Uint32 previousTicks;
-    float deltaTime;
+    Uint32 previousTicks; 
+    float deltaTime;      
 
 public:
-    // Default Constructor
-    Timer() : previousTicks(0), deltaTime(0) {}
+    /**
+     * @brief Constructs the Timer object and initializes timing values.
+     */
+    Timer();
 
-    void Tick() {
-        Uint32 currentTicks = SDL_GetTicks();
-        deltaTime = (currentTicks - previousTicks) / 1000.0f;
-        previousTicks = currentTicks;
-    }
+    /**
+     * @brief Updates the timer and calculates the delta time for the current frame.
+     */
+    void Tick();
 
-    float getDeltaTime() {
-        return deltaTime;
-    }    
+    /**
+     * @brief Retrieves the time elapsed (delta time) since the last frame.
+     * @return The delta time in seconds.
+     */
+    float getDeltaTime() const;
 };
+
+#endif
