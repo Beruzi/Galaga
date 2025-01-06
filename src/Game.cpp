@@ -47,6 +47,7 @@ void Game::run() {
     SDL_Event event;
     isRunning = true;
 
+    
     while (isRunning) {
         while (SDL_PollEvent(&event)) {
             // Quit Event
