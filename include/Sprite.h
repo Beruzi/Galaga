@@ -52,7 +52,7 @@ public:
     /**
      * @brief Renders the sprite onto the screen
      */
-    void Render();
+    void render();
 
     /**
      * @brief Converts the SDL_FRect to SDL_Rect

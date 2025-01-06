@@ -26,16 +26,6 @@ Spritesheet Cordinates (x, y, w, h)
 
 ----------------------------------------------------------------------------------------
 Things to add:
-- Constants File 
-    - Constants for some of the sprites' location/dimensions
-    - Constant for Sprite sheet file path
-    - Constant heigh and width for window
-    - Constant height and width for a border around the window -- PADDING 
-        - Currently I am using '5' as the padding 
-
-- Change how keyboard event handling works... at the moment I can only handle one button press at a time in a sequential order (duh the event queue).... this means however that it is impossible to move diagonal or fire and move at the same time.
-
-
 - Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed
 
 - Refactor the file structure 

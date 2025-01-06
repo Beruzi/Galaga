@@ -2,13 +2,17 @@
 #define PLAYER_H
 
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
 #include "Sprite.h"
+#include "Missile.h"
 
 /**
  * @brief Handles all things player. 
 */
 class Player : public Sprite {
+private:
+    std::vector<Missile> missiles;
 public:
     /**
      * @brief Constructor, will initialize the SDL_FRect and srcRect for sprites amongst other things
@@ -22,16 +26,18 @@ public:
 
 
     /**
-     * @brief Handles the movement inputs (WASD)... this uses the keyboard state rather than the event'
-     * to bypass the 'repeated key delay' that the OS imposes
+     * @brief Handles a discrete event by the player
      * @param dt Delta Time (elapsed time in seconds) for frame independent movement
+     * @
      */
-    void processMovement(float dt);
+    void handleImmediateInput(SDL_Event& event);
 
     /**
-     * @brief player fires a shot
+     * @brief Primarily handles the movement inputs (WASD), but this will be used to monitor 
+     * keyboard state rather than a discrete event happening
+     * @param dt Delta Time (elapsed time in seconds) for frame independent movement
      */
-    void shoot();
+    void handleContinousInput(float dt);
 
     /**
      * @brief Enforces the player stays within the window bounds with a border padding. 
@@ -39,6 +45,23 @@ public:
      *  
      */    
     void enforceBounds();
+
+    /**
+     * @brief player fires a shot
+     */
+    void shoot();
+
+    /**
+     * @brief Update the position of all missiles per frame
+     * @param dt Delta Time (elapsed time in seconds) for frame independent movement
+     */
+    void updateMissiles(float dt);
+
+    /**
+     * @brief Loops through all missiles and renders them
+     */
+    void renderMissiles();
+    
 };
 
 #endif 

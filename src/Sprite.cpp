@@ -39,7 +39,7 @@ void Sprite::setSourceRect(int x, int y, int w, int h) {
     srcRect = {x, y, w, h};
 }
 
-void Sprite::Render() {
+void Sprite::render() {
     SDL_Rect intRect = toSDL_Rect();
     SDL_RenderCopy(renderer, spriteSheetTexture, &srcRect, &intRect);
 }

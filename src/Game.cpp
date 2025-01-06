@@ -24,7 +24,7 @@ Game::Game() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 
     // Load the Sprite sheet
-    Sprite::LoadSpriteSheet(renderer, "../assets/Sprites/SpriteSheet.bmp");
+    Sprite::LoadSpriteSheet(renderer, "assets/Sprites/SpriteSheet.bmp");
 
     // Start Timer
     timer = new Timer();
@@ -53,19 +53,26 @@ void Game::run() {
             if (event.type == SDL_QUIT) {
                 isRunning = false;
             }
+            player->handleImmediateInput(event);
         }
 
         // Update Timer
         timer->Tick();
         float dt = timer->getDeltaTime();
 
-        // Player event
-        player->processMovement(dt);
+        // Update all Sprites
+        player->handleContinousInput(dt);
+        player->updateMissiles(dt);
 
-        // Render Updates
+        // Clear Renderer
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-        player->Render();
+
+        // Render all sprites
+        player->render();
+        player->renderMissiles();
+
+        // Update the window/screen
         SDL_RenderPresent(renderer);
     }
 }
