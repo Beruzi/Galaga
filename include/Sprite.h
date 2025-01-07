@@ -12,6 +12,7 @@
 class Sprite {
 protected:
     static SDL_Texture* spriteSheetTexture;  // Shared resource for all sprites
+    static int spriteCount;
 
     SDL_FRect rect;      
     SDL_Rect srcRect;   
@@ -59,6 +60,12 @@ public:
      * @return An SDL_Rect corresponding to the SDL_FRect dimensions
      */
     SDL_Rect toSDL_Rect() const;
+
+
+    /**
+     * @brief Just a Print statement to monitor sprite members in terminal
+     */
+    void print();
 };
 
 #endif 

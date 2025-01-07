@@ -2,6 +2,7 @@
 
 // Initialize static member
 SDL_Texture* Sprite::spriteSheetTexture = nullptr;
+int Sprite::spriteCount = 0;
 
 Sprite::Sprite(float x, float y, float w, float h, SDL_Renderer* renderer)
     : renderer(renderer) {
@@ -10,7 +11,8 @@ Sprite::Sprite(float x, float y, float w, float h, SDL_Renderer* renderer)
 }
 
 Sprite::~Sprite() {
-    if (spriteSheetTexture) {
+    --spriteCount;
+    if (spriteCount == 0 && spriteSheetTexture) {
         SDL_DestroyTexture(spriteSheetTexture);
         spriteSheetTexture = nullptr; 
     }
@@ -51,4 +53,9 @@ SDL_Rect Sprite::toSDL_Rect() const {
         static_cast<int>(rect.w),
         static_cast<int>(rect.h)
     };
+}
+
+
+void Sprite::print() {
+    std::cout << "Position of Sprite" << std::endl;
 }

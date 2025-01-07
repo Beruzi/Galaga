@@ -30,7 +30,7 @@ Game::Game() {
     timer = new Timer();
 
     // Create the player
-    player = new Player(240 - 15, 600 - 16, 15, 16, renderer);
+    player = new Player(240 - 15, 600 - 16, 30, 32, renderer);
 }
 
 Game::~Game() {
@@ -72,7 +72,8 @@ void Game::run() {
         // Render all sprites
         player->render();
         player->renderMissiles();
-
+        
+        
         // Update the window/screen
         SDL_RenderPresent(renderer);
     }
