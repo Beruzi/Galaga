@@ -7,5 +7,5 @@ Missile::Missile(float x, float y, float w, float h, SDL_Renderer* renderer)
 }
 
 void Missile::fly(float dt) {
-    rect.y -= 250 * dt;
+    winRect.y -= 250 * dt;
 }

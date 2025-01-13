@@ -20,16 +20,16 @@ void Player::handleImmediateInput(SDL_Event& event) {
 void Player::handleContinousInput(float dt) {
     const Uint8* keyState = SDL_GetKeyboardState(NULL);
     if (keyState[SDL_SCANCODE_W]) {
-        rect.y -= (200 * dt);
+        winRect.y -= (200 * dt);
     }
     if (keyState[SDL_SCANCODE_A]) {
-        rect.x -= (200 * dt);
+        winRect.x -= (200 * dt);
     }
     if (keyState[SDL_SCANCODE_S]) {
-        rect.y += (200 * dt);
+        winRect.y += (200 * dt);
     }
     if (keyState[SDL_SCANCODE_D]) {
-        rect.x += (200* dt);
+        winRect.x += (200* dt);
     }
 
     // Check Bounds
@@ -38,15 +38,15 @@ void Player::handleContinousInput(float dt) {
 
 void Player::enforceBounds() {
     // Adds a 5 pixel border padding
-    if (rect.x < 5) rect.x = 5;
-    if (rect.y < 5) rect.y = 5;
-    if (rect.x + rect.w > 480 - 5) rect.x = 480 - 5 - rect.w;
-    if (rect.y + rect.h > 640 - 5) rect.y = 640 - 5 - rect.h;
+    if (winRect.x < 5) winRect.x = 5;
+    if (winRect.y < 5) winRect.y = 5;
+    if (winRect.x + winRect.w > 480 - 5) winRect.x = 480 - 5 - winRect.w;
+    if (winRect.y + winRect.h > 640 - 5) winRect.y = 640 - 5 - winRect.h;
 }
 
 void Player::shoot() {
     std::cout << "Pew" << std::endl;
-    missiles.emplace_back(rect.x + rect.w / 2, rect.y, 6, 14, renderer);
+    missiles.emplace_back(winRect.x + winRect.w / 2, winRect.y, 6, 14, renderer);
 }
 
 void Player::updateMissiles(float dt) {

@@ -14,7 +14,7 @@ protected:
     static SDL_Texture* spriteSheetTexture;  // Shared resource for all sprites
     static int spriteCount;
 
-    SDL_FRect rect;      
+    SDL_FRect winRect;      
     SDL_Rect srcRect;   
     SDL_Renderer* renderer;
 

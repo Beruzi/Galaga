@@ -6,7 +6,7 @@ int Sprite::spriteCount = 0;
 
 Sprite::Sprite(float x, float y, float w, float h, SDL_Renderer* renderer)
     : renderer(renderer) {
-    rect = {x, y, w, h};
+    winRect = {x, y, w, h};
     srcRect = {0, 0, static_cast<int>(w), static_cast<int>(h)};
 }
 
@@ -48,10 +48,10 @@ void Sprite::render() {
 
 SDL_Rect Sprite::toSDL_Rect() const {
     return SDL_Rect{
-        static_cast<int>(rect.x),
-        static_cast<int>(rect.y),
-        static_cast<int>(rect.w),
-        static_cast<int>(rect.h)
+        static_cast<int>(winRect.x),
+        static_cast<int>(winRect.y),
+        static_cast<int>(winRect.w),
+        static_cast<int>(winRect.h)
     };
 }
 
