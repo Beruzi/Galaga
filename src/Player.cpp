@@ -1,6 +1,7 @@
 #include "Sprite.h"
 #include "Player.h"
 
+
 Player::Player(float x, float y, float w, float h, SDL_Renderer* renderer)
     : Sprite(x, y, w, h, renderer) {
     // Set the Source Rectangle to the default/upright player sprite
@@ -50,9 +51,21 @@ void Player::shoot() {
 }
 
 void Player::updateMissiles(float dt) {
-    for (auto& missile : missiles){
+    // Update the Missiles Position
+    for (auto& missile : missiles) {
         missile.fly(dt);
     }
+
+    // Erase any Missiles that are off screen using the remove-erase technique
+    missiles.erase(
+        std::remove_if(
+            missiles.begin(), 
+            missiles.end(),
+            std::mem_fn(&Missile::isOffScreen)
+        ),
+        missiles.end()
+    );
+    std::cout << missiles.size() << std::endl;
 }
 
 void Player::renderMissiles() {

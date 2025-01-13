@@ -2,6 +2,7 @@
 #define MISSLE_H
 
 #include <iostream>
+#include <algorithm>
 #include <SDL2/SDL.h>
 #include "Sprite.h"
 
@@ -20,8 +21,15 @@ public:
     /**
      * @brief Move the missle
      * @param dt Delta Time (elapsed time in seconds) for frame independent movement
+     * @returns Returns a bool where false means that the missile position is off the screen
      */
     void fly(float dt);
+
+    /**
+     * @brief Simply returns if a missile's position is past the renderable window
+     * @returns bool
+     */
+    bool isOffScreen();
 
 };
 

@@ -9,3 +9,7 @@ Missile::Missile(float x, float y, float w, float h, SDL_Renderer* renderer)
 void Missile::fly(float dt) {
     winRect.y -= 250 * dt;
 }
+
+bool Missile::isOffScreen() {
+    return (winRect.y < 0);
+}
