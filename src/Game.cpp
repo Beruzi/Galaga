@@ -1,7 +1,5 @@
 #include "Game.h"
-#include "Player.h"
-#include "Timer.h"
-#include "Sprite.h"
+
 
 Game::Game() {
     // Initialize SDL
@@ -31,6 +29,7 @@ Game::Game() {
 
     // Create the player
     player = new Player(240 - 15, 600 - 16, 30, 32, renderer);
+    alien = new Butterfly(200.0f, 50.0f, 16.0f, 18.0f, 2, renderer);
 }
 
 Game::~Game() {
@@ -65,6 +64,9 @@ void Game::run() {
         player->handleContinousInput(dt);
         player->updateMissiles(dt);
 
+        alien->shoot();
+        alien->updateMissiles(dt, player->getWindRect(), alien->getWindRect());
+
         // Clear Renderer
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -72,6 +74,9 @@ void Game::run() {
         // Render all sprites
         player->render();
         player->renderMissiles();
+        
+        alien->render();
+        alien->renderMissiles();
         
         
         // Update the window/screen

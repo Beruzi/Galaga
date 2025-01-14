@@ -47,7 +47,7 @@ void Player::enforceBounds() {
 
 void Player::shoot() {
     std::cout << "Pew" << std::endl;
-    missiles.emplace_back(winRect.x + winRect.w / 2, winRect.y, 6, 14, renderer);
+    missiles.emplace_back(winRect.x + (winRect.w / 2), winRect.y, 6, 14, renderer);
 }
 
 void Player::updateMissiles(float dt) {

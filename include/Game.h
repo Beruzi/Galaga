@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "Player.h"
+#include "Timer.h"
+#include "Sprite.h"
+#include "Alien.h"
 
 // Forward Declartions
 class Sprite;
@@ -23,6 +27,7 @@ private:
 
     // Game Related Members
     Player* player = nullptr;
+    Alien* alien = nullptr;
 
 public:
     /**

@@ -61,7 +61,6 @@ public:
      * @brief Loops through all missiles and renders them
      */
     void renderMissiles();
-    
 };
 
 #endif 

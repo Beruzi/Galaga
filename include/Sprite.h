@@ -50,6 +50,10 @@ public:
      */
     void setSourceRect(int x, int y, int w, int h);
 
+    void setWindRect(float x, float y, float w, float h);
+
+    const SDL_FRect& getWindRect();
+
     /**
      * @brief Renders the sprite onto the screen
      */

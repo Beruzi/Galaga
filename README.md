@@ -26,10 +26,9 @@ Spritesheet Cordinates (x, y, w, h)
 
 ----------------------------------------------------------------------------------------
 Things to add:
-- Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed
+- Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed.... THIS IS FOR BOTH THE MISSILES AND PLAYER/ALIENS
 
-- Refactor the file structure 
-    - Create seperate source and header files... compiling time is starting to piss me off
-    - Create the proper build dir
-    - Dabble in Cmake stuff
-    - update the .gitignore file as needed
+- Refactor some code...
+    - The constructors currently being used for creating any sprite object is a parameterized constructor. It really doesn't make sense to do this... I should just use a default constructor and assign default values of 0 to everything and otherwise I can just call the setWinRect() and setSourceRect() functions.
+
+- NEXT STEPS IS TO ADD COLLISION! This should be fun 

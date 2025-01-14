@@ -41,6 +41,15 @@ void Sprite::setSourceRect(int x, int y, int w, int h) {
     srcRect = {x, y, w, h};
 }
 
+void Sprite::setWindRect(float x, float y, float w, float h) {
+    winRect = {x, y, w, h};
+}
+
+const SDL_FRect& Sprite::getWindRect() {
+    return winRect;
+}   
+
+
 void Sprite::render() {
     SDL_Rect intRect = toSDL_Rect();
     SDL_RenderCopy(renderer, spriteSheetTexture, &srcRect, &intRect);
