@@ -8,52 +8,30 @@ This is a remake of the 80's arcade game, Galaga. Built using SDL2, I am pursuin
 
 
 ## CODE STRUCTURE
-- Game: handles all the the game responsibilities... considered to be the highest power
-    - Game loop
-    - Forward necessary input to other managers (events)
-    - Game state management 
 
-- Game Manager: System level management... name is a little misleading -- doesn't manage the game object per se, but rather provides the utility for the game (system level services/management)
-    - SDL Init and cleanup
-    - Textures, audios
-    - Manaing the window and renderer
-
-- Player : 
-    - Stores position, health, lives, etc.
-    - Handling animations
-- Player Manager 
-    - Processing input - sends the data to the player to make changes to its position
-    - rendering player and its missiles
-    
-
-
-
-
----------------------------------------------------------------------------------------
-Compile Terminal Commands:
-- g++ -std=c++17 main.cpp -o prog -I/usr/include/SDL2 -L/usr/lib/x86_64-linux-gnu -lSDL2
-- ./prog
-
-
-
----------------------------------------------------------------------------------------
-Spritesheet Cordinates (x, y, w, h)
-- Default/Upright Player
-    - (184, 55, 15, 16)
 
 
 
 ----------------------------------------------------------------------------------------
 Things to add:
-- Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed.... THIS IS FOR BOTH THE MISSILES AND PLAYER/ALIENS
+- [ ] Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed.... THIS IS FOR BOTH THE MISSILES AND PLAYER/ALIENS
 
-- Refactor some code...
-    - The constructors currently being used for creating any sprite object is a parameterized constructor. It really doesn't make sense to do this... I should just use a default constructor and assign default values of 0 to everything and otherwise I can just call the setWinRect() and setSourceRect() functions.
+- [ ] Add Collision... create the Collision System and make the necessary adjustments to the other managers to register the collisions
+    - It's also a chance to dabble in polymorphic behavior... the 2D Vector of aliens will be of the alien type, however the aliens themselves are the subtypes. So the 2D vector can be treated as aliens generaically but we can impose the specific functionality depending on the derived class of alien. 
+        - ie the boss doesn't shoot missiles but has the tractor beam thing
+- [ ] Figure out how to get the layout of the aliens... could use some enum and hardcode a layout
+    - something like the following where we populate the 2D vecetor given the symbol:
+```
+                [O O O O O]
+                [  B B B  ]
+                [A A A A A]
+```
+- [ ] Rotate the sprites... the aliens orientation depends on the direction they're moving, the missiles should point in the direction they're travelling
 
-- NEXT STEPS IS TO ADD COLLISION! This should be fun 
+- [ ] For collisions, add the destruction animation using the explosion sprites
 
-
-- This is a change to use polymorphism!!! (Using a base class pointer/reference to derived objects)...
-    - Specifically during our 2D vector of Aliens... the DS is composed of Alien objects however, each Alien will actually be of a derived type of alien (bee, butterfly, etc). This means that we can treat the aliens generically but still impose specific behavior... for instane the shooting mechanism. The boss type aliens don't shoot missiles, just the ufo gravity picker-upper thing. 
-
-- Move the textureSheet management to the game manager
+- [ ] We have the precursor to game state already defined... finish it up...
+    - Adding a menu screen
+    - Adding the pause and unpause behavior
+    - the quick escpae pop if the 'escape' key is presssed
+    - etc.
