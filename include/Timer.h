@@ -13,20 +13,9 @@ private:
     float deltaTime;      
 
 public:
-    /**
-     * @brief Constructs the Timer object and initializes timing values.
-     */
     Timer();
 
-    /**
-     * @brief Updates the timer and calculates the delta time for the current frame.
-     */
-    void Tick();
-
-    /**
-     * @brief Retrieves the time elapsed (delta time) since the last frame.
-     * @return The delta time in seconds.
-     */
+    void tick();
     float getDeltaTime() const;
 };
 
