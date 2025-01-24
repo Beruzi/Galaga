@@ -6,6 +6,7 @@
 Game::Game(GameManager& gm) : 
     gameManager(gm),
     playerManager(gm),
+    alienManager(gm),
     /* Initialize other Managers,*/
     running(false), 
     currentState(GameState::Playing), 
@@ -36,23 +37,24 @@ void Game::run() {
         timer.tick();
         dt = timer.getDeltaTime();
 
-        // Update Entities
+        // Make Game Updates
         update(dt);
 
+        // Render all Game Entities
         render();
-
         std::cout << "Delta time: " << dt << " seconds" << std::endl;
     }
 }
 
 void Game::initManagers() {
     playerManager.initPlayer();
-    // alienManager.init...();
+    // adjust the initialization to have the real alien layout
+    alienManager.initAliens(1,1);
 }
 
 void Game::update(float dt) {
     playerManager.update(dt);
-    // alienManager.update(dt);
+    alienManager.update(dt);
 }
 
 void Game::render() {
@@ -60,7 +62,7 @@ void Game::render() {
     SDL_RenderClear(gameManager.getRenderer());
 
     playerManager.render();
-    // alienManager.render();
+    alienManager.render();
 
     SDL_RenderPresent(gameManager.getRenderer());
 }
