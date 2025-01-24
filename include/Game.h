@@ -6,12 +6,8 @@
 #include "Timer.h"
 #include "../src/Managers/GameManager.h"
 #include "../src/Managers/PlayerManager.h"
-/*
-#include "PlayerManager.h"
-#include "AlienManager.h"
-#include "CollisionSystem.h"
-*/
-
+#include "../src/Managers/AlienManager.h"
+// #include "../src/Managers/CollisionSystem.h"
 /**
  * @brief The core of the Game Logic -- doesn't manage SDL related tasks, 
  * but will handle things like Game Loop, forwarding events to manager, prompting managers
@@ -22,6 +18,7 @@ private:
     // Managers to be Added
     GameManager& gameManager;
     PlayerManager playerManager;
+    AlienManager alienManager;
 
 
     // Game state
