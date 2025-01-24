@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-#include "../src/Managers/GameManager.h"
+#include "GameManager.h"
 #include "Game.h"
 
 // Entry Point

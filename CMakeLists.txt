@@ -8,8 +8,12 @@ project(Galaga)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add the include directory to the include path
-include_directories(${CMAKE_SOURCE_DIR}/include)
+# Add include directories for headers
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include          # Base include directory
+    ${CMAKE_SOURCE_DIR}/include/entities # Include for entity headers
+    ${CMAKE_SOURCE_DIR}/include/managers # Include for manager headers
+)
 
 # Find SDL2 package
 find_package(SDL2 REQUIRED)
