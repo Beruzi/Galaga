@@ -60,10 +60,9 @@ void PlayerManager::shoot() {
 
     // Create a new missile at the player's current position
     missiles.emplace_back(
-        player->getWindowRect().x + (player->getWindowRect().w / 2), // Missile starts at the player's center
+        player->getWindowRect().x + (player->getWindowRect().w / 2), 
         player->getWindowRect().y,
-        6, 14, // Missile dimensions
-        gameManager.getRenderer() // Pass renderer
+        250
     );
 }
 

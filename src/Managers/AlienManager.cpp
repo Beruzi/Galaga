@@ -39,9 +39,8 @@ void AlienManager::moveAliens(float dt) {
 void AlienManager::shoot(const Alien& alien) {
     missiles.emplace_back(
         alien.getWindowRect().x + (alien.getWindowRect().w / 2), 
-        alien.getWindowRect().y + alien.getWindowRect().h,       
-        6, 14, 
-        gameManager.getRenderer()
+        alien.getWindowRect().y + alien.getWindowRect().h,
+        150
     );
 }
 

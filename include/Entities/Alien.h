@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
-#include "../src/Managers/GameManager.h"
+#include "GameManager.h"
 #include "Sprite.h"
 #include "Missile.h"
 
