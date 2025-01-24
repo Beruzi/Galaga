@@ -1,14 +1,15 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
+#include "../src/Managers/GameManager.h"
 #include "Game.h"
 
-/*
-    Entry Point
-*/
+// Entry Point
 int main(int argc, char *argv[]) {
-    Game Galaga;
-    Galaga.run();
-    SDL_Quit();
+    GameManager gameManager;
+    gameManager.init();
+
+    Game game(gameManager);
+    game.run();
     return 0;
 }

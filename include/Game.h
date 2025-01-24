@@ -3,48 +3,49 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "Player.h"
 #include "Timer.h"
-#include "Sprite.h"
-#include "Alien.h"
-
-// Forward Declartions
-class Sprite;
-class Player;
-class Timer;
+#include "../src/Managers/GameManager.h"
+#include "../src/Managers/PlayerManager.h"
+/*
+#include "PlayerManager.h"
+#include "AlienManager.h"
+#include "CollisionSystem.h"
+*/
 
 /**
- * @brief The Game object will define all of the overhead needed for executing the game.
- * This includes the core Game Loop, the event loop + queue, rendering, and managing the state of the game
+ * @brief The core of the Game Logic -- doesn't manage SDL related tasks, 
+ * but will handle things like Game Loop, forwarding events to manager, prompting managers
+ * to render, etc.
  */
 class Game {
 private:
-    // Core Game Members
-    SDL_Window *window = nullptr;
-    SDL_Renderer *renderer = nullptr;
-    bool isRunning = false;
-    Timer* timer;
+    // Managers to be Added
+    GameManager& gameManager;
+    PlayerManager playerManager;
 
-    // Game Related Members
-    Player* player = nullptr;
-    Alien* alien = nullptr;
+
+    // Game state
+    enum class GameState { Playing, Paused, Menu };
+    GameState currentState;
+    bool running;
+
+    Timer timer;
 
 public:
-    /**
-     * @brief Default Constructor
-     */ 
-    Game();
-
-    /**
-     * Destructor
-     */
+    // Class Basics
+    Game(GameManager& gm);
     ~Game();
 
-    /**
-     * @brief Main function responsible for running the game.
-     * Will start the game loop, event loop, and other primary actions
-     */
+    // Game Functions
     void run();
+    void initManagers();
+    void handleInput();
+    void update(float dt);
+    void render();
+
+    // Event Handling
+    void handleImmediateInput(SDL_Event& event);
+
 };
 
-#endif 
+#endif // GAME_H

@@ -4,8 +4,27 @@ This is a remake of the 80's arcade game, Galaga. Built using SDL2, I am pursuin
 
 
 ###### Notes
-I'll be taking some general notes for myself in this space, so just ignore. Towards the end of the project I'll post the actual set of notes I've been taking alongside development. This will cover some things I'ver learned about using SDL2, general game development, CPP stuff, and more.  
 
+
+
+## CODE STRUCTURE
+- Game: handles all the the game responsibilities... considered to be the highest power
+    - Game loop
+    - Forward necessary input to other managers (events)
+    - Game state management 
+
+- Game Manager: System level management... name is a little misleading -- doesn't manage the game object per se, but rather provides the utility for the game (system level services/management)
+    - SDL Init and cleanup
+    - Textures, audios
+    - Manaing the window and renderer
+
+- Player : 
+    - Stores position, health, lives, etc.
+    - Handling animations
+- Player Manager 
+    - Processing input - sends the data to the player to make changes to its position
+    - rendering player and its missiles
+    
 
 
 
@@ -32,3 +51,9 @@ Things to add:
     - The constructors currently being used for creating any sprite object is a parameterized constructor. It really doesn't make sense to do this... I should just use a default constructor and assign default values of 0 to everything and otherwise I can just call the setWinRect() and setSourceRect() functions.
 
 - NEXT STEPS IS TO ADD COLLISION! This should be fun 
+
+
+- This is a change to use polymorphism!!! (Using a base class pointer/reference to derived objects)...
+    - Specifically during our 2D vector of Aliens... the DS is composed of Alien objects however, each Alien will actually be of a derived type of alien (bee, butterfly, etc). This means that we can treat the aliens generically but still impose specific behavior... for instane the shooting mechanism. The boss type aliens don't shoot missiles, just the ufo gravity picker-upper thing. 
+
+- Move the textureSheet management to the game manager
