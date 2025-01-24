@@ -3,17 +3,9 @@
 This is a remake of the 80's arcade game, Galaga. Built using SDL2, I am pursuing this project because I thought it would be a fun way expand upon my C++ knowledge, get some C-style experience in as well (SDL2 is a C-Style API), and have a local game I can play when I'm bored. 
 
 
-###### Notes
-
-
-
-## CODE STRUCTURE
-
-
-
 
 ----------------------------------------------------------------------------------------
-Things to add:
+##### Things to add:
 - [ ] Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed.... THIS IS FOR BOTH THE MISSILES AND PLAYER/ALIENS
 
 - [ ] Add Collision... create the Collision System and make the necessary adjustments to the other managers to register the collisions
