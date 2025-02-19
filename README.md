@@ -6,6 +6,7 @@ This is a remake of the 80's arcade game, Galaga. Built using SDL2, I am pursuin
 
 ----------------------------------------------------------------------------------------
 ##### Things to add:
+- [ ] Fix our SSH so we can push changes to github... idk i think I messed something up in my config file while configuring my other ssh key for school & google cloud
 - [ ] Normalize the diagonal speed... currently diagonal speed is faster than the horizontal and vertical speed.... THIS IS FOR BOTH THE MISSILES AND PLAYER/ALIENS
 
 - [ ] Add Collision... create the Collision System and make the necessary adjustments to the other managers to register the collisions
