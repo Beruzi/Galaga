@@ -1,4 +1,4 @@
-#include "Engine.h"
+#include "GameEngine.h"
 
 
 // -------------------------------------------
@@ -11,11 +11,10 @@ GameEngine::~GameEngine() {
     shutdown();
 }
 
-
 // -------------------------------------------
 // Intialize SDL Resources
 // -------------------------------------------
-bool GameEngine::init() {
+void GameEngine::init() {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Quit();
@@ -26,10 +25,14 @@ bool GameEngine::init() {
     }
 
     // Initialize SDL Resources
+    isRunning = true;
     initWindow();
     initRenderer();
 
-    // Initialize Managers and Sub-Systems
+    // Initialize Subsystems and Assets
+    renderSystem = new RenderSystem(renderer);
+    timer = new Timer();
+    inputSystem = new InputSystem();
 
     // Run
     run();
@@ -45,6 +48,8 @@ void GameEngine::initWindow() {
         640,
         SDL_WINDOW_SHOWN
     );
+    if (!window) { throw std::runtime_error("Failed to Create Window" + std::string(SDL_GetError())); }
+    else { }
 }
 
 void GameEngine::initRenderer() {
@@ -53,19 +58,32 @@ void GameEngine::initRenderer() {
 
     // Check Renderer
     if (!renderer) { throw std::runtime_error("Failed to create renderer" + std::string(SDL_GetError())); }
-    else           { std::cout << "Renderer created sucessfully" << std::endl; }
+    else { std::cout << "Renderer created sucessfully" << std::endl;}
 }
 
 // -------------------------------------------
 // Engine
 // -------------------------------------------
 void GameEngine::run() {
-    // Start Timer
-
+    Player* player = new Player();
     while(isRunning) {
-        // Tick Timer
-
-        // Prompt Input System
+        SDL_Event event;
+        while(SDL_PollEvent(&event)) {
+            // Game Level Events...
+            switch (event.type) {
+                case SDL_QUIT:
+                    isRunning = false;
+                    break;
+                case SDL_KEYDOWN:
+                    inputSystem->processImmediateEvent(event);
+                    break;
+                default: 
+                    break;
+            }             
+        }
+        // process continous input 
+        float dt = timer->tick();
+        // Update Game State, Draw Current Frame, etc
 
         // Update ScneManager w/ Input
             // Will have multiple scenes (gameplace, paused, menu, highscores, etc)
@@ -73,15 +91,18 @@ void GameEngine::run() {
                 // RenderSystem, CollisionSystem, EntityManager will all be promted by the scene
 
         // Render the Current Scene
+        //renderSystem->sceneRender();
+        renderSystem->render(player);
 
-        // Frame Cap -- use timer to force a delay such that this "frame" takes as long as it should
-        
+        // TODO: Frame Cap -- use timer to force a delay such that this "frame" takes as long as it should
     }
+    shutdown();
 }
 
 void GameEngine::shutdown() {
-    // Deallocate Managers and Sub-Systems
+    // TODO Free Managers and Sub-Systems
 
+    // Free SDL Resources
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
     SDL_Quit();
