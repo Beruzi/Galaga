@@ -5,17 +5,19 @@
 
 class Player : public Entity {
 private:
-    int lives;
+    int hp;
     // Some ADT for missles
 
 public:
     Player();
     ~Player();
     
-    // Player Events
+    // Player Functionality
+    void move(float dx, float dy) override;
     void shoot();
 
-    
+    // Player Utility
+    void enforceBounds();
     
 
 };

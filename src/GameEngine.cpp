@@ -5,7 +5,7 @@
 // Class Basics
 // -------------------------------------------
 GameEngine::GameEngine() 
-    : window(nullptr), renderer(nullptr), isRunning(false) {}
+    : window(nullptr), renderer(nullptr), isRunning(false), player(nullptr) {}
 
 GameEngine::~GameEngine() {
     shutdown();
@@ -29,10 +29,21 @@ void GameEngine::init() {
     initWindow();
     initRenderer();
 
+    // Intialize Testing Entities Manually (no Entity Manager)
+    player = new Player();
+    aliens.emplace_back(Alien::AlienType::Bee, 300.0, 400.0, 16.0, 16.0);
+    aliens.emplace_back(Alien::AlienType::Butterfly, 350.0, 400.0, 16.0, 16.0);
+    aliens.emplace_back(Alien::AlienType::Boss, 400.0, 400.0, 16.0, 16.0);
+
+
+
+
+
+
     // Initialize Subsystems and Assets
     renderSystem = new RenderSystem(renderer);
     timer = new Timer();
-    inputSystem = new InputSystem();
+    inputSystem = new InputSystem(player);
 
     // Run
     run();
@@ -65,34 +76,40 @@ void GameEngine::initRenderer() {
 // Engine
 // -------------------------------------------
 void GameEngine::run() {
-    Player* player = new Player();
     while(isRunning) {
         SDL_Event event;
         while(SDL_PollEvent(&event)) {
-            // Game Level Events...
-            switch (event.type) {
+            switch (event.type) { // Game Level Events
                 case SDL_QUIT:
                     isRunning = false;
                     break;
                 case SDL_KEYDOWN:
-                    inputSystem->processImmediateEvent(event);
+                    // TODO: check for "esc" or perhaps "p" for pause
                     break;
-                default: 
+                case SDL_MOUSEMOTION:
+                    // TODO: Check for mouse motion?
                     break;
             }             
         }
-        // process continous input 
         float dt = timer->tick();
-        // Update Game State, Draw Current Frame, etc
+        /* TODO: Through the SceneManager, invoke all subsystems according to the specific scene:
+                    - Menu Scene
+                    - Highschore Scene
+                    - Gameplay Scene
+                        - Pause
+                Depending on the scene above, subsystems will perform differently with certain inputs
+        */
 
-        // Update ScneManager w/ Input
-            // Will have multiple scenes (gameplace, paused, menu, highscores, etc)
-            // Depending upon the type of scene, a scene will prompt other managers
-                // RenderSystem, CollisionSystem, EntityManager will all be promted by the scene
+        inputSystem->handlePlayerEvent(dt);
 
-        // Render the Current Scene
-        //renderSystem->sceneRender();
+
+        // RENDERING SHIT
+        SDL_RenderClear(renderer);
         renderSystem->render(player);
+        for (auto alien : aliens) {
+            renderSystem->render(&alien);
+        }
+        SDL_RenderPresent(renderer);
 
         // TODO: Frame Cap -- use timer to force a delay such that this "frame" takes as long as it should
     }

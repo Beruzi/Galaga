@@ -44,10 +44,10 @@ void RenderSystem::sceneRender() {
 }
 
 void RenderSystem::render(const Entity* entity) {
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
     if (SDL_RenderCopyF(renderer, spriteSheetTexture, &entity->getSrcRect(), &entity->getWinRect()) != 0) {
         throw std::runtime_error("Failed to Render: " + std::string(SDL_GetError()));
     }
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer);
 }
 

@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <vector>
 
 #include "RenderSystem.h"
 #include "Timer.h"
 #include "InputSystem.h"
 #include "Player.h"
+#include "Alien.h"
 
 /**
  * @brief Controls Game Loop, Initializes SDL, Delegates Subsystems
@@ -17,6 +19,8 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool isRunning;
+    Player* player;
+    std::vector<Alien> aliens;
 
     // Managers and Sub-Systems
     RenderSystem* renderSystem;

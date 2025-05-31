@@ -19,17 +19,19 @@ public:
     // Getters & Setters
     const SDL_FRect& getWinRect() const;
     void setWinRect(float x, float y, float w, float h);
+    void setWinRect(float x, float y);
 
     const SDL_Rect& getSrcRect() const;
     void setSrcRect(int x, int y, int w, int h);
 
 
-    // Movement
-    void move();
+    // Entity Fucntionality
+    virtual void move(float dx, float dy);
 
     // Utitilty
     const SDL_Rect toSDL_Rect();
     void printPosition();
+    void enforceBounds();
     
 };
 #endif // ENTITY_H

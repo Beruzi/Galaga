@@ -6,4 +6,15 @@ In Progress Notes:
 
 - Gameplay Event handling (forwarded to input system)
 
-- Constructors Member Init List for Entity is a little odd right now... don't really know if I want to or should i even be initializing the posRect;
+
+- Eventually migrate constants to something cleaner
+    - Window width and height
+    - source rectangles for Sprites
+    - Starting location for a new player ship
+    - the 5p border for the entire window
+    - 
+
+- Double Fire Power
+    - When saving a Galaga Ship, we basically have two intances of the player..
+        - Can either create a new instance of the player entity (change members upon instantiation)
+        - Define the copy assignment operator or copy constructor (a 1 to 1 copy to simply double up on the player entities)    

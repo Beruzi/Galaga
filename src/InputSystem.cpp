@@ -1,22 +1,28 @@
 #include "InputSystem.h"
 
 InputSystem::InputSystem() {}
+InputSystem::InputSystem(Player* player) : player(player) {}
 InputSystem::~InputSystem() {}
 
 // ----------------------------
 // Handling Inputs
 // -------------------------------
-void InputSystem::processImmediateEvent(SDL_Event event) {
-    if (event.key.repeat == 0) {
-        std::cout << event.key.keysym.sym << std::endl;
-        switch (event.key.keysym.sym) {
-        case SDLK_w:
-            move();
-            break;
+void InputSystem::handlePlayerEvent(float dt) {
+    const Uint8* keyState = SDL_GetKeyboardState(NULL);
 
-        case SDLK_SPACE: 
-            //shoot();
-            break;
-        }
+    if (keyState[SDL_SCANCODE_W]) {
+        player->move(0, -200 * dt);
     }
+    if (keyState[SDL_SCANCODE_A]) {
+        player->move(-200 * dt, 0);
+    }
+    if (keyState[SDL_SCANCODE_S]) {
+        player->move(0, 200 * dt);
+    }
+    if (keyState[SDL_SCANCODE_D]) {
+        player->move(200 * dt, 0);
+    }
+
+    // Check Bounds
+    //player->enforceBounds();
 }
