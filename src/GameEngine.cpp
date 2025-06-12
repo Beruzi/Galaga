@@ -29,24 +29,11 @@ void GameEngine::init() {
     initWindow();
     initRenderer();
 
-    // Intialize Testing Entities Manually (no Entity Manager)
-    player = new Player();
-    aliens.emplace_back(Alien::AlienType::Bee, 300.0, 400.0, 16.0, 16.0);
-    aliens.emplace_back(Alien::AlienType::Butterfly, 350.0, 400.0, 16.0, 16.0);
-    aliens.emplace_back(Alien::AlienType::Boss, 400.0, 400.0, 16.0, 16.0);
-
-
-
-
-
-
+    
     // Initialize Subsystems and Assets
     renderSystem = new RenderSystem(renderer);
     timer = new Timer();
     inputSystem = new InputSystem(player);
-
-    // Run
-    run();
 }
 
 void GameEngine::initWindow() {
@@ -106,9 +93,6 @@ void GameEngine::run() {
         // RENDERING SHIT
         SDL_RenderClear(renderer);
         renderSystem->render(player);
-        for (auto alien : aliens) {
-            renderSystem->render(&alien);
-        }
         SDL_RenderPresent(renderer);
 
         // TODO: Frame Cap -- use timer to force a delay such that this "frame" takes as long as it should

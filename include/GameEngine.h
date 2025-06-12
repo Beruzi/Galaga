@@ -19,8 +19,6 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool isRunning;
-    Player* player;
-    std::vector<Alien> aliens;
 
     // Managers and Sub-Systems
     RenderSystem* renderSystem;

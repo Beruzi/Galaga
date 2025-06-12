@@ -1,8 +1,9 @@
 #include <Player.h>
 
-Player::Player() : Entity(184, 55, 16, 16), hp(3) {
-    setWinRect(215, 304, 32, 32);
-}
+Player::Player() : Entity() {} 
+Player::Player(int srcX, int srcY, int w, int h) {}
+Player::Player(int srcX, int srcY, int winX, int winY, int w, int h) {}
+
 
 Player::~Player(){}
 

@@ -13,7 +13,8 @@ protected:
 public:
     // Class Basics
     Entity();
-    Entity(int x, int y, int w, int h);
+    Entity(int srcX, int srcY, int w, int h);
+    Entity(int srcX, int srcY, float winX, float winY, int w, int h);
     virtual ~Entity() = 0;
 
     // Getters & Setters

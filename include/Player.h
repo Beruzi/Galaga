@@ -10,6 +10,8 @@ private:
 
 public:
     Player();
+    Player(int srcX, int srcY, int w, int h);
+Player(int srcX, int srcY, int winX, int winY, int w, int h);
     ~Player();
     
     // Player Functionality
